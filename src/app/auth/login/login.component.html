@@ -1,0 +1,21 @@
+<section style="margin-top: 10%;">
+    <form [formGroup]="loginForm" (ngSubmit)="login()" fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="12px">
+
+        <mat-form-field class="example-full-width">
+          <mat-label>Email</mat-label>
+          <input type="email" formControlName="email" matInput  placeholder="Ex. pat@example.com">
+          <mat-hint>Enter your registered email id!</mat-hint>
+          <mat-error>Please enter a valid email!</mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="example-full-width">
+            <mat-label>Password</mat-label>
+            <input type="password" formControlName="password" matInput  placeholder="Ex. pat@example.com">
+            <mat-hint>Enter the login password!</mat-hint>
+            <mat-error>Please enter the password!</mat-error>
+        </mat-form-field>
+
+        <button mat-raised-button type="submit" color="primary" [disabled]="loginForm.invalid">Login!</button>
+
+    </form>
+</section>
