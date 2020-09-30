@@ -14,6 +14,9 @@ import { PastTrainingsComponent } from './training/past-trainings/past-trainings
 import { AppRoutingModule } from './app-routing/app-routing.module';
 import { WeclomeComponent } from './weclome/weclome.component';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { HeaderComponent } from './navigation/header/header.component';
+import { SidenavListComponent } from './navigation/sidenav-list/sidenav-list.component';
+import { StoptrainingComponent } from './training/current-training/stoptraining/stoptraining.component';
 
 
 @NgModule({
@@ -26,6 +29,9 @@ import { FlexLayoutModule } from '@angular/flex-layout';
     NewTrainingComponent,
     PastTrainingsComponent,
     WeclomeComponent,
+    HeaderComponent,
+    SidenavListComponent,
+    StoptrainingComponent,
   ],
   imports: [
     BrowserModule,
@@ -35,9 +41,11 @@ import { FlexLayoutModule } from '@angular/flex-layout';
     FlexLayoutModule,
     FormsModule,
     ReactiveFormsModule
-
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [
+    StoptrainingComponent
+  ],
 })
 export class AppModule { }

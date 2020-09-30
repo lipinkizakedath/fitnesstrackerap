@@ -1,0 +1,8 @@
+<h2 mat-mat-dialog-title fxLayoutAlign="center center">Are you sure?</h2>
+<mat-dialog-content fxLayoutAlign="center center">
+    <p>You are now at {{ passsedData.progress }}%</p>
+</mat-dialog-content>
+<mat-dialog-actions>
+    <button mat-flat-button [mat-dialog-close]="true">Yes</button>
+    <button mat-flat-button [mat-dialog-close]="false">Cancel</button>
+</mat-dialog-actions>
