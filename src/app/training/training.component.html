@@ -1,4 +1,4 @@
-<mat-tab-group *ngIf="!onGoingTraining">
+<mat-tab-group *ngIf="!onGoingTraining" mat-align-tabs="center">
     <mat-tab label="New Training">
         <app-new-training (trainingStart)="onGoingTraining = true"></app-new-training>
     </mat-tab>

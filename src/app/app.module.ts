@@ -1,51 +1,46 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { AngularFirestoreModule } from '@angular/fire/firestore';
+import { AngularFireModule } from '@angular/fire';
+
 
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MaterialModule } from './material/material.module';
-import { SignupComponent } from './auth/signup/signup.component';
-import { LoginComponent } from './auth/login/login.component';
-import { TrainingComponent } from './training/training.component';
-import { CurrentTrainingComponent } from './training/current-training/current-training.component';
-import { NewTrainingComponent } from './training/new-training/new-training.component';
-import { PastTrainingsComponent } from './training/past-trainings/past-trainings.component';
-import { AppRoutingModule } from './app-routing/app-routing.module';
+import { AppRoutingModule } from './app-routing.module';
 import { WeclomeComponent } from './weclome/weclome.component';
-import { FlexLayoutModule } from '@angular/flex-layout';
 import { HeaderComponent } from './navigation/header/header.component';
 import { SidenavListComponent } from './navigation/sidenav-list/sidenav-list.component';
-import { StoptrainingComponent } from './training/current-training/stoptraining/stoptraining.component';
+import { AuthService } from './Services/Auth.service';
+import { TrainingService } from './Services/Training.service';
+import { environment } from '../environments/environment';
+import { UiService } from './Services/ui.service';
+import { AuthModule } from './auth/auth.module';
+import { SharedModule } from './shared/shared.module';
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    SignupComponent,
-    LoginComponent,
-    TrainingComponent,
-    CurrentTrainingComponent,
-    NewTrainingComponent,
-    PastTrainingsComponent,
     WeclomeComponent,
     HeaderComponent,
     SidenavListComponent,
-    StoptrainingComponent,
   ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
-    MaterialModule,
+    AuthModule,
+    SharedModule,
     AppRoutingModule,
-    FlexLayoutModule,
-    FormsModule,
-    ReactiveFormsModule
+    AngularFirestoreModule,
+    AngularFireModule.initializeApp(environment.firebase),
+
+
   ],
-  providers: [],
+  providers: [
+    AuthService,
+    TrainingService,
+    UiService
+  ],
   bootstrap: [AppComponent],
-  entryComponents: [
-    StoptrainingComponent
-  ],
 })
 export class AppModule { }
