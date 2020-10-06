@@ -2,6 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AngularFireModule } from '@angular/fire';
+import { StoreModule } from '@ngrx/store';
 
 
 import { AppComponent } from './app.component';
@@ -16,6 +17,7 @@ import { environment } from '../environments/environment';
 import { UiService } from './Services/ui.service';
 import { AuthModule } from './auth/auth.module';
 import { SharedModule } from './shared/shared.module';
+import { appReducer } from '../app/app.reducer';
 
 
 @NgModule({
@@ -33,7 +35,7 @@ import { SharedModule } from './shared/shared.module';
     AppRoutingModule,
     AngularFirestoreModule,
     AngularFireModule.initializeApp(environment.firebase),
-
+    StoreModule.forRoot({ui: appReducer})
 
   ],
   providers: [
