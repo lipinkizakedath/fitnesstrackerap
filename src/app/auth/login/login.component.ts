@@ -4,8 +4,7 @@ import { Store } from '@ngrx/store';
 import { Observable, Subscription } from 'rxjs';
 import { AuthService } from 'src/app/Services/Auth.service';
 import { UiService } from 'src/app/Services/ui.service';
-import { map } from 'rxjs/operators';
-import * as fromApp from '../../app.reducer';
+import * as fromRoot from '../../app.reducer';
 
 
 @Component({
@@ -22,30 +21,26 @@ export class LoginComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private authSerive: AuthService,
-    private uiService: UiService,
-    private store: Store<{ ui: fromApp.State }>) { }
+    private store: Store<fromRoot.State>) { }
 
   ngOnInit(): void {
     this.loginFormAction();
   }
 
-  loginFormAction() {
-    this.isLoading$ = this.store.pipe(map(state => state.ui.isLoading));
+  loginFormAction(): void {
+    this.isLoading$ = this.store.select(fromRoot.getIsLoading);
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', Validators.required],
     });
   }
 
-  login() {
+  login(): void {
     this.authSerive.login({
       email: this.loginForm.value.email,
       password: this.loginForm.value.password
     });
   }
 
-  // ngOnDestroy() {
-  //   this.loadingSubscription.unsubscribe();
-  // }
 
 }

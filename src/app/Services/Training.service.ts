@@ -4,6 +4,9 @@ import { Exercise } from '../models/Exercise';
 import { map } from 'rxjs/operators';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { UiService } from './ui.service';
+import * as fromRoot from '../app.reducer';
+import * as UI from '../shared/ui.action';
+import { Store } from '@ngrx/store';
 
 @Injectable({
   providedIn: 'root'
@@ -19,9 +22,10 @@ export class TrainingService {
   private runningExercise: Exercise;
   private availableExercises: Exercise[] = [];
 
-  constructor(private db: AngularFirestore, private uiService: UiService) { }
+  constructor(private db: AngularFirestore, private uiService: UiService, private store: Store<fromRoot.State>) { }
 
-  fetchAvailableExercises() {
+  fetchAvailableExercises(): void {
+    this.store.dispatch(new UI.StartLoading());
     this.firebaseSubscription.push(this.db.collection('availableExercises')
       .snapshotChanges().pipe(map(docArray => {
         return docArray.map(doc => {
@@ -33,16 +37,17 @@ export class TrainingService {
           };
         });
       })).subscribe((exercise: Exercise[]) => {
-        console.log(exercise);
+        this.store.dispatch(new UI.StopLoading());
         this.availableExercises = exercise;
         this.ExercisesChagned.next([...this.availableExercises]);
       }, error => {
+        this.store.dispatch(new UI.StopLoading());
         this.uiService.showSnakbar(error.message, null, 2000);
       }
       ));
   }
 
-  startExercise(exerciseId: string) {
+  startExercise(exerciseId: string): void {
     this.runningExercise = this.availableExercises.find(x => x.id === exerciseId);
     this.exerciseChanged.next({ ...this.runningExercise });
   }
@@ -51,7 +56,7 @@ export class TrainingService {
     return { ...this.runningExercise };
   }
 
-  completeExercise() {
+  completeExercise(): void {
     this.addDataToDatabase(
       {
         ...this.runningExercise,
@@ -62,7 +67,7 @@ export class TrainingService {
     this.exerciseChanged.next(null);
   }
 
-  cancelExercise(progress: number) {
+  cancelExercise(progress: number): void {
     this.addDataToDatabase({
       ...this.runningExercise,
       duration: this.runningExercise.duration * (progress / 100),
@@ -74,18 +79,18 @@ export class TrainingService {
     this.exerciseChanged.next(null);
   }
 
-  fetchCompletedOrCancelledExercises() {
+  fetchCompletedOrCancelledExercises(): void {
     this.firebaseSubscription.push(this.db.collection('finishedExercises').valueChanges()
       .subscribe((exercise: Exercise[]) => {
         this.finishedExercisesChanged.next(exercise);
       }));
   }
 
-  cancelSubsriptions() {
+  cancelSubsriptions(): void {
     this.firebaseSubscription.forEach(sub => sub.unsubscribe());
   }
 
-  addDataToDatabase(exercise: Exercise) {
+  addDataToDatabase(exercise: Exercise): void {
     this.db.collection('finishedExercises').add(exercise);
   }
 
