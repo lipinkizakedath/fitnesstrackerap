@@ -1,4 +1,3 @@
-import { Action } from 'rxjs/internal/scheduler/Action';
 import { AuthAction, SET_AUTHENTICATED, SET_UNAUTHENTICATED } from './auth.actions';
 
 export interface State {

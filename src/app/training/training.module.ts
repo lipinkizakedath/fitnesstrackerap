@@ -6,6 +6,8 @@ import { PastTrainingsComponent } from '../training/past-trainings/past-training
 import { StoptrainingComponent } from '../training/current-training/stoptraining/stoptraining.component';
 import { SharedModule } from '../shared/shared.module';
 import { TrainingRoutingModule } from './training-routing.module';
+import { StoreModule } from '@ngrx/store';
+import { trainingReducer } from './training.reducer';
 
 
 @NgModule({
@@ -19,13 +21,12 @@ import { TrainingRoutingModule } from './training-routing.module';
 
   imports: [
     SharedModule,
-    TrainingRoutingModule
+    TrainingRoutingModule,
+    // since its a lazy loading module we have to add it in this way, we cannot add this reducer to the app.reducer
+    StoreModule.forFeature('training', trainingReducer), // this is for the lazy loading
   ],
 
   exports: [],
-
-  entryComponents: [
-    StoptrainingComponent
-  ],
+  entryComponents: [StoptrainingComponent],
 })
 export class TrainingModule { }

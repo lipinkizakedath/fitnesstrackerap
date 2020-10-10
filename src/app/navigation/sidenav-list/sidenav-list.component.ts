@@ -13,7 +13,6 @@ export class SidenavListComponent implements OnInit {
 
   @Output() closeSidenav = new EventEmitter<void>();
   isAuthenticated$: Observable<boolean>;
-  authSubscription: Subscription;
 
   constructor(private authService: AuthService, private store: Store<fromRoot.State>) { }
 

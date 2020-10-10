@@ -6,7 +6,7 @@
         <mat-form-field fxLayoutAlign="center">
           <mat-label>Select Exercise</mat-label>
           <mat-select placeholder="Select an excercise!" ngModel name="exerciseId" required>
-            <mat-option *ngFor="let item of ExcerciseList" [value]="item.id">
+            <mat-option *ngFor="let item of excerciseList$ | async" [value]="item.id">
               {{item.name}}
             </mat-option>
           </mat-select>
@@ -18,6 +18,6 @@
     </mat-card>
   </form>
 </section>
-<section fxLayout fxLayoutAlign="center" *ngIf="(isLoading$ | async)" style="padding-top: 10% ;">
+<section fxLayout fxLayoutAlign="center" *ngIf="isLoading$ | async" style="padding-top: 10% ;">
   <mat-spinner></mat-spinner>
 </section>
